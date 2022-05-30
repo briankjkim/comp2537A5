@@ -1,0 +1,19 @@
+{
+  "name": "assignment-5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/briankjkim/comp2537A5.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/briankjkim/comp2537A5/issues"
+  },
+  "homepage": "https://github.com/briankjkim/comp2537A5#readme"
+}
