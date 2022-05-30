@@ -7,7 +7,11 @@ var session = require('express-session')
 
 
 // Use the session middleware
-app.use(session({ secret: 'ssshhhhh', saveUninitialized: true, resave: true }));
+app.use(session({
+    secret: 'ssshhhhh',
+    saveUninitialized: true,
+    resave: true
+}));
 
 function auth1(req, res, next) {
     if (req.session.authenticated)
@@ -18,22 +22,22 @@ function auth1(req, res, next) {
 }
 
 
-users = [
-    {
-        username: "user1",
-        password: "pass1",
-        admin: true,
-    }, {
-        username: "user2",
-        password: "pass2",
-        admin: false,
-    }
-]
+users = [{
+    username: "user1",
+    password: "pass1",
+    admin: true,
+}, {
+    username: "user2",
+    password: "pass2",
+    admin: false,
+}]
 
 
 const bodyparser = require('body-parser');
 
-app.use(bodyparser.urlencoded({extends: true})); 
+app.use(bodyparser.urlencoded({
+    extends: true
+}));
 
 
 // const mongoose = require('mongoose')  // mongoDB 
@@ -54,14 +58,29 @@ app.get('/', auth1, function (req, res) {
 })
 
 
-app.post('/register', (req, res) => {
-    const user = new User(req.body)
-    user.save((err, userInfo) => {
-        if(err) return res.json({success: false, err})
-        return res.status(200).json({
-            success: true
+app.get('/login/', function (req, res, next) {
+    res.send("Please provide the credentials through the URL")
+})
+
+
+app.get('/login/:user/:pass', function (req, res, next) {
+    if (users.filter((user) => {
+            return user.username == req.params.user
+        })[0].password == req.params.pass)
+    // if (users[req.params.user] == req.params.pass) 
+    {
+        req.session.authenticated = true
+        req.session.user = req.params.user
+        // res.send("Successful Login!")
+        res.render('profile.ejs', {
+            username: user.username,
+            userrole: user.userrole,
         })
-    })
+    } else {
+        req.session.authenticated = false
+        res.send("Failed Login!")
+    }
+
 })
 
 
