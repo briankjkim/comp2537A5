@@ -72,10 +72,7 @@ app.get('/login/:user/:pass', function (req, res, next) {
         req.session.authenticated = true
         req.session.user = req.params.user
         // res.send("Successful Login!")
-        res.render('profile.ejs', {
-            username: user.username,
-            userrole: user.userrole,
-        })
+        res.redirect('/public/index.html');
     } else {
         req.session.authenticated = false
         res.send("Failed Login!")
