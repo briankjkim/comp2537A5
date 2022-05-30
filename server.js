@@ -38,4 +38,5 @@ app.post('/register', (req, res) => {
     })
 })
 
+
 app.use(express.static('./public'));
