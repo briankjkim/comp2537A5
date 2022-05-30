@@ -1,8 +1,7 @@
-hasFlippedCard = false;
-
-
-firstCard = undefined
 secondCard = undefined
+firstCard = undefined
+
+cardHasBeenFlipped = false
 
 
 pokemonGridImages = ''
@@ -12,7 +11,7 @@ function processPokeResp(data) {
     pokemonGridImages += ` 
       <div class="card">
       <img id="${data.id}" class="front_face" src="${data.sprites.other["official-artwork"].front_default}">
-      <img id="back${data.id}" class="back_face" src="back.jpg">
+      <img id="${data.id}" class="back_face" src="back.jpg">
       </div>`
 }
 
@@ -42,18 +41,18 @@ function setup(){
     $("#game_grid").on("click", ".card", function() {
         $(this).toggleClass("flip")
 
-        if(!hasFlippedCard){
+        if(!cardHasBeenFlipped){
             // this is the first card
-            firstCard = $(this).find('.front_face')[0]
+            firstCard = $(this).find('.front_face')[0];
             console.log(firstCard);
-            hasFlippedCard = true;
+            cardHasBeenFlipped = true;
         }else{
             // 2nd card
-            secondCard =  $(this).find('.front_face')[0]
+            secondCard =  $(this).find('.front_face')[0];
             console.log(firstCard, secondCard);
-            hasFlippedCard = false;
+            cardHasBeenFlipped = false;
 
-
+            // check if you have match
             if(
                 $(`#${firstCard.id}`).attr("src") 
                 == 
@@ -61,10 +60,17 @@ function setup(){
                 )
             {
                 console.log("A Match!");
+                
+                $(`#${firstCard.id}`).parent().off("click");
+                $(`#${secondCard.id}`).parent().off("click");
                 // inc a global 
                 // disable cards
             }else{
                 console.log("Not A Match!");
+                setTimeout(() => {
+                    $(`#${firstCard.id}`).parent().removeClass("flip")
+                    $(`#${secondCard.id}`).parent().removeClass("flip")
+                }, 1000)
                 // unflip cards
             }
         }
