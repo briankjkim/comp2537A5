@@ -3,6 +3,33 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 
+var session = require('express-session')
+
+
+// Use the session middleware
+app.use(session({ secret: 'ssshhhhh', saveUninitialized: true, resave: true }));
+
+function auth1(req, res, next) {
+    if (req.session.authenticated)
+        next()
+    else {
+        res.redirect('/login')
+    }
+}
+
+
+users = [
+    {
+        username: "user1",
+        password: "pass1",
+        admin: true,
+    }, {
+        username: "user2",
+        password: "pass2",
+        admin: false,
+    }
+]
+
 
 const bodyparser = require('body-parser');
 
@@ -22,10 +49,9 @@ app.listen(process.env.PORT || 5000, function (err) {
 })
 
 
-
-app.get('/', function (req, res) {
+app.get('/', auth1, function (req, res) {
     res.sendFile(__dirname + '/public/index.html')
-});
+})
 
 
 app.post('/register', (req, res) => {
