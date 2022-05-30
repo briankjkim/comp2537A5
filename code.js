@@ -18,7 +18,7 @@ function processPokeResp(data) {
 
 
 async function loadPokemonImages() {
-    for (i = 1; i <= 9; i++) {
+    for (i = 1; i <= 4; i++) { 
         // 1- generate a random number for Pokemon ID so that images can be loaded
         pokemonRandomID = Math.floor(Math.random() * 33) + 1
 
@@ -31,7 +31,8 @@ async function loadPokemonImages() {
 
         }
         pokemonGridImages += `</div>`    
-    $("#game_grid").html(pokemonGridImages)
+    $("#game_grid").html(pokemonGridImages);
+    $("#game_grid").append(pokemonGridImages);
 }
 
 
@@ -44,7 +45,7 @@ function setup(){
         if(!hasFlippedCard){
             // this is the first card
             firstCard = $(this).find('.front_face')[0]
-            // console.log(firstCard);
+            console.log(firstCard);
             hasFlippedCard = true;
         }else{
             // 2nd card
@@ -67,8 +68,6 @@ function setup(){
                 // unflip cards
             }
         }
-
-        
     })
 }
 
