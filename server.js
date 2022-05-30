@@ -94,6 +94,7 @@ app.post("/register", (req, res) => {
     User.register(new User({
         username: req.body.username,
         admin: req.body.admin,
+        age: req.body.age,
     }), req.body.password, function (err, user) {
         if (err) {
             console.log(err);
